@@ -5,8 +5,9 @@ To analyse the stability of the system having open loop transfer function, G(S)=
 Computer with MATLAB software
 
 ## Theory:
+![WhatsApp Image 2025-11-16 at 14 20 42_cfac6d2d](https://github.com/user-attachments/assets/811bf111-eb12-4607-9ffe-4168bfd4edd5)
+![WhatsApp Image 2025-11-16 at 14 20 43_f59416b4](https://github.com/user-attachments/assets/39b64e59-406b-47c5-b998-219b8f41414a)
 
-![WhatsApp Image 2025-11-17 at 18 29 58_c43a5fb6](https://github.com/user-attachments/assets/1342b3c9-3eb3-420c-adc0-083f6a2d59cb)
 
 
 ## Procedure:
@@ -19,19 +20,19 @@ Computer with MATLAB software
 
 ## Program: 
 ~~~
-num=[10]
-den=[0.1 0.7 1 0]
+num=[1]
+den = conv([1 0], conv([0.5 1], [0.2 1]));
 sys=tf(num,den)
-[mag,phase,W]=bode(sys)
-mag=squeeze(mag)
-phase=squeeze(phase)
-phase1=deg2rad(phase)
-polarplot(phase1,mag,'linewidth',1.5)
-grid on
-[Gm Pm Wpc Wgc]=margin(sys)
-if(Wpc>Wgc)
+w=logspace(-1,2,1000);
+[mag phase]=bode(sys,w);
+mag=squeeze(mag);
+phase=squeeze(phase);
+theta=deg2rad(phase);
+polarplot(theta,mag,'LineWidth',1.5)
+[gm pm wpc wgc]=margin(sys)
+if (wpc>wgc)
     disp('stable')
-elseif(Wpc == Wgc)
+elseif (wpc==wgc)
     disp('marginally stable')
 else
     disp('unstable')
@@ -39,20 +40,12 @@ end
 ~~~
 
 ## Output:
-
-<img width="693" height="625" alt="image" src="https://github.com/user-attachments/assets/33402d2a-3723-46b7-93c1-ef21a0a8c9e2" />
-
-
+<img width="1210" height="997" alt="Screenshot 2025-11-19 142220" src="https://github.com/user-attachments/assets/26a96e84-1640-4a36-a0d4-17c9cbb63029" />
 
 ## Result:
-Thus the polar plot for the given transfer function was drawn and verified using MATLAB. 
-
-Gain margin = 0.70
-
-Phase Margin = -8.88
-
-Gain crossover frequency = 3.75
-
-Phase crossover frequency = 3.16
-
-The system is unstable
+Thus the polar plot for the given transfer function was drawn and verified using MATLAB. <br>
+Gain margin =  7.0000 rad/s <br>
+Phase Margin = 55.6412 degree <br>
+Gain crossover frequency =  0.8979 rad/s <br>
+Phase crossover frequency = 3.1623 rad/s <br>
+The system is  Stable
